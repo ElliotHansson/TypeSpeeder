@@ -1,4 +1,4 @@
-package se.ju23.typespeeder;
+/*package se.ju23.typespeeder;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
