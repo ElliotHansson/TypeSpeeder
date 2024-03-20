@@ -8,7 +8,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createUser (String username, String password, String inGameName) {
+    public boolean createUser (String username, String password, String inGameName) {
         if (userRepository.findByUsername(username) == null) {
             User user= new User();
             user.setUsername(username);
