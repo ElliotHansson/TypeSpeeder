@@ -18,6 +18,9 @@ public class User {
     @Column(name = "ingamename", length = 45)
     private String inGameName;
 
+    @Column(name = "score")
+    private int score;
+
     public Long getId() {
         return id;
     }
@@ -31,7 +34,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = this.username;
+        this.username = username;
     }
 
     public String getPassword() {
@@ -39,7 +42,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = this.password;
+        this.password = password;
     }
 
     public String getInGameName() {
@@ -47,6 +50,17 @@ public class User {
     }
 
     public void setInGameName(String inGameName) {
-        this.inGameName = this.inGameName;
+        this.inGameName = inGameName;
     }
+
+    public int getScore() {
+        return score;
+    }
+    public void setScore(int score) {
+        this.score = score;
+    }
+    public void addScore(int additionalScore) {
+        this.score += additionalScore;
+    }
+
 }

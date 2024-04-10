@@ -1,9 +1,9 @@
 package se.ju23.typespeeder.Menu;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import se.ju23.typespeeder.Spel.GameManager;
-import se.ju23.typespeeder.Spel.LeaderboardManager;
-import se.ju23.typespeeder.Spel.PatchNotesManager;
+import se.ju23.typespeeder.Spel.*;
+import se.ju23.typespeeder.database.User;
 import se.ju23.typespeeder.database.UserService;
 
 import java.util.Scanner;
@@ -12,12 +12,20 @@ import java.util.Scanner;
 public class MainMenu {
     private Scanner sc = new Scanner(System.in);
     private final UserService userService;
+    private final LoginManager loginManager;
+    private final GameManager gameManager;
+    private final LeaderboardManager leaderboardManager;
+    private final PatchNotesManager patchNotesManager;
     private boolean isloggedIn = false;
 
-    public MainMenu(UserService userService) {
+    @Autowired
+    public MainMenu(UserService userService, LoginManager loginManager, GameManager gameManager, LeaderboardManager leaderboardManager, PatchNotesManager patchNotesManager) {
         this.userService = userService;
+        this.loginManager = loginManager;
+        this.gameManager = gameManager;
+        this.leaderboardManager = leaderboardManager;
+        this.patchNotesManager = patchNotesManager;
     }
-
 
     public void showAuthenticationMenu() {
         while (!isloggedIn) {
@@ -38,7 +46,7 @@ public class MainMenu {
                     createAccount();
                     break;
                 case 3:
-                    accountCorrentionManager.correctAccount();
+                    correctAccount();
                     break;
 
                 default:
@@ -49,7 +57,6 @@ public class MainMenu {
     }
 
     private void login () {
-        LoginManager loginManager= new LoginManager();
         isloggedIn = loginManager.login();
         if (!isloggedIn) {
             System.out.println("Fel uppgifter försök igen.");
@@ -71,32 +78,47 @@ public class MainMenu {
             System.out.println("Kunde inte skapa konto användarnamnet kan vara upptaget.");
         }
     }
-    private AccountCorrentionManager accountCorrentionManager= new AccountCorrentionManager();
-    private GameManager gameManager = new GameManager();
-    private LeaderboardManager leaderboardManager = new LeaderboardManager();
-    private PatchNotesManager patchNotesManager = new PatchNotesManager();
+    private void correctAccount() {
+        System.out.println("Ange användarens ID");
+        Long userId = Long.parseLong(sc.nextLine());
+
+        System.out.println("Ange nytt lösenord");
+        String newPassword = sc.nextLine();
+
+        System.out.println("Ange nytt spelnamn");
+        String newInGameName = sc.nextLine();
+
+        try {
+            User updatedUser = userService.updateUser(userId, newPassword, newInGameName);
+            System.out.println("Uppdaterat");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void showMainMenu() {
         while (isloggedIn) {
-            System.out.println("4. Spela spelet");
-            System.out.println("5. Topplista");
-            System.out.println("6. Patch Notes");
-            System.out.println("7. Avsluta");
+            System.out.println("\nHuvudmeny");
+            System.out.println("1. Spela spelet");
+            System.out.println("2. Topplista");
+            System.out.println("3. Patch Notes");
+            System.out.println("4. Avsluta");
             System.out.println("Välj ett alternativ.");
 
             int choice = sc.nextInt();
             sc.nextLine();
 
             switch (choice) {
-                case 4:
+                case 1:
                     gameManager.play();
                     break;
-                case 5:
+                case 2:
                     leaderboardManager.showLeaderboard();
                     break;
-                case 6:
+                case 3:
                     patchNotesManager.showPatchNotes();
                     break;
-                case 7:
+                case 4:
                     System.out.println("Avslutar...");
                     isloggedIn = false;
                     break;

@@ -8,13 +8,26 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public boolean authenticate (String username, String password){
+        User user = userRepository.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)){
+            return true;
+        } else {
+            return false;
+        }
+    }
     public boolean createUser (String username, String password, String inGameName) {
         if (userRepository.findByUsername(username) == null) {
             User user= new User();
             user.setUsername(username);
             user.setPassword(password);
             user.setInGameName(inGameName);
-            return userRepository.save(user);
+            try {
+                userRepository.save(user);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         } else {
             throw new RuntimeException("Användarnamnet är upptaget.");
         }
@@ -23,8 +36,12 @@ public class UserService {
     public User updateUser(Long id, String newPassword, String newInGameName) {
         User user = userRepository.findById(id). orElse(null);
         if (user != null) {
-            user.setPassword(newPassword);
-            user.setInGameName(newInGameName);
+            if (!newPassword.isEmpty()) {
+                user.setPassword(newPassword);
+            }
+            if (!newInGameName.isEmpty()) {
+                user.setInGameName(newInGameName);
+            }
             userRepository.save(user);
         } else {
             throw new RuntimeException("Användaren finns inte");
