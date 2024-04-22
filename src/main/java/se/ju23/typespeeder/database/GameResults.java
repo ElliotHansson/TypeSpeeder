@@ -1,8 +1,7 @@
-package se.ju23.typespeeder.Spel;
+package se.ju23.typespeeder.database;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
+import se.ju23.typespeeder.database.User;
 
 @Entity
 @Table(name = "results")
@@ -12,17 +11,24 @@ public class GameResults {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "playerid", referencedColumnName = "id")
+    private User player;
+
     @Column(name = "username", nullable = false, length = 45)
     private String username;
 
     @Column(name = "score", nullable = false)
     private int score;
 
-    @Column(name = "result_time", nullable = false)
-    private LocalDateTime resultTime;
+    @Column(name = "time")
+    private long resultTime;
+
+    @Column(name = "game_type")
+    private int gameType;
 
     public GameResults() {
-        this.resultTime = LocalDateTime.now();
+        this.resultTime = System.currentTimeMillis();
     }
 
     public Long getId() {
@@ -31,6 +37,13 @@ public class GameResults {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public User getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(User player) {
+        this.player = player;
     }
 
     public String getUsername() {
@@ -49,11 +62,18 @@ public class GameResults {
         this.score = score;
     }
 
-    public LocalDateTime getResultTime() {
+    public long getResultTime() {
         return resultTime;
     }
 
-    public void setResultTime(LocalDateTime resultTime) {
+    public void setResultTime(long resultTime) {
         this.resultTime = resultTime;
     }
+    public int getGameType() {
+        return gameType;
+    }
+    public void setGameType(int gameType) {
+        this.gameType = gameType;
+    }
+
 }

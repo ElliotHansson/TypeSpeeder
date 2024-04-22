@@ -21,6 +21,9 @@ public class User {
     @Column(name = "score")
     private int score;
 
+    @Column (name = "total_score")
+    private Integer totalScore = 0;
+
     public Long getId() {
         return id;
     }
@@ -59,8 +62,17 @@ public class User {
     public void setScore(int score) {
         this.score = score;
     }
+    public int getTotalScore() {
+        return totalScore!= null ? totalScore: 0;
+    }
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
     public void addScore(int additionalScore) {
-        this.score += additionalScore;
+        if (this.totalScore == null) {
+            this.totalScore = 0;
+        }
+        this.totalScore += additionalScore;
     }
 
 }

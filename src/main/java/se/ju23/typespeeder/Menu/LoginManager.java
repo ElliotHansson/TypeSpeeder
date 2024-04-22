@@ -2,6 +2,7 @@ package se.ju23.typespeeder.Menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import se.ju23.typespeeder.database.User;
 import se.ju23.typespeeder.database.UserService;
 
 import java.util.Scanner;
@@ -16,20 +17,19 @@ public class LoginManager {
     this.userService = userService;
     }
 
-    public boolean login() {
-        System.out.println("Ange användarnamn");
+    public User login() {
+        System.out.println("Ange användarnamn:");
         String username = sc.nextLine();
-
-        System.out.println("Ange lösenord");
+        System.out.println("Ange lösenord:");
         String password = sc.nextLine();
 
-        boolean isAuthenticated = userService.authenticate(username, password);
-        if (isAuthenticated) {
+        User user = userService.authenticate(username, password);
+        if (user != null) {
             System.out.println("Inloggningen lyckades!");
-            return true;
+            return user;
         } else {
-            System.out.println("Inloggning misslyckades");
-            return false;
+            System.out.println("Inloggning misslyckades.");
+            return null;
         }
     }
 }

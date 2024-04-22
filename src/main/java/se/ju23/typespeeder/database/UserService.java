@@ -3,17 +3,23 @@ package se.ju23.typespeeder.database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean authenticate (String username, String password){
+    public List<User> findAllUsersOrderByTotalScoreDesc() {
+        return userRepository.findAllByOrderByTotalScoreDesc();
+    }
+
+    public User authenticate (String username, String password){
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)){
-            return true;
+            return user;
         } else {
-            return false;
+            return null;
         }
     }
     public boolean createUser (String username, String password, String inGameName) {
@@ -48,4 +54,9 @@ public class UserService {
         }
         return user;
     }
+    public void addScoreToUser(User user, int score) {
+        user.addScore(score);
+        userRepository.save(user);
+    }
+
 }
