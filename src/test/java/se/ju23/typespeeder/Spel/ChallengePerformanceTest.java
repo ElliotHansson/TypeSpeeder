@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ChallengePerformanceTest {
     private static final int MAX_EXECUTION_TIME = 200;
     private static final int MILLISECONDS_CONVERSION = 1_000_000;
-    @org.junit.Test
+    @Test
     public void testStartChallengePerformance() {
         Challenge challenge = new Challenge();
         long startTime = System.nanoTime();
