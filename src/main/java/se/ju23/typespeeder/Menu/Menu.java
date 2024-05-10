@@ -32,7 +32,7 @@ public class Menu implements MenuService {
         this.leaderboardManager = leaderboardManager;
         this.patchNotesManager = patchNotesManager;
         this.scanner = scanner;
-        this.currentLanguage = "SVENSKA";
+        this.currentLanguage = "svenska";
     }
 
     @Override
@@ -41,11 +41,11 @@ public class Menu implements MenuService {
         String languageChoice = scanner.nextLine().trim().toLowerCase();
 
         if ("engelska".equals(languageChoice)) {
-            currentLanguage = "ENGLISH";
-            System.out.println("Engelska valt.");
+            currentLanguage = "english";
+            System.out.println("english choosen.");
         } else {
 
-            currentLanguage = "SVENSKA";
+            currentLanguage = "svenska";
             System.out.println("Svenska valt.");
         }
 
