@@ -12,30 +12,24 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.ju23.typespeeder.Leaderboard.LeaderboardManager;
-import se.ju23.typespeeder.Menu.LoginManager;
-import se.ju23.typespeeder.Menu.Menu;
-import se.ju23.typespeeder.Menu.MenuService;
+
 import se.ju23.typespeeder.Spel.GameManager;
-import se.ju23.typespeeder.Spel.PatchNotesManager;
+import se.ju23.typespeeder.Spel.Patch;
 import se.ju23.typespeeder.database.UserService;
 
 import static org.mockito.Mockito.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class MenuTest {
     @Mock private UserService userService;
     @Mock private LoginManager loginManager;
     @Mock private GameManager gameManager;
     @Mock private LeaderboardManager leaderboardManager;
-    @Mock private PatchNotesManager patchNotesManager;
+    @Mock private Patch patchNotesManager;
     @Mock private Scanner scanner;
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

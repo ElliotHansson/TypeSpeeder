@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class GameManager {
     private final Scanner sc = new Scanner(System.in);
     private final LeaderboardManager leaderboardManager;
-    private  Challenge challenge;
+    private Challenge challenge;
     private User currentUser;
 
     @Autowired
@@ -21,7 +21,7 @@ public class GameManager {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
-        this.challenge = new Challenge(leaderboardManager, currentUser);
+        this.challenge = new Challenge(leaderboardManager, currentUser, sc);
     }
 
     public void play() {

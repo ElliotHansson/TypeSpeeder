@@ -1,28 +1,28 @@
 package se.ju23.typespeeder.Menu;
-
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.testng.annotations.Test;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.Test;
 import se.ju23.typespeeder.Leaderboard.LeaderboardManager;
 import se.ju23.typespeeder.Spel.GameManager;
-import se.ju23.typespeeder.Spel.PatchNotesManager;
+import se.ju23.typespeeder.Spel.Patch;
 import se.ju23.typespeeder.database.UserService;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class MenuPerformanceTest {
     @Mock
     private UserService userService;
     @Mock private LoginManager loginManager;
     @Mock private GameManager gameManager;
     @Mock private LeaderboardManager leaderboardManager;
-    @Mock private PatchNotesManager patchNotesManager;
+    @Mock private Patch patch;
     @Mock private Scanner scanner;
 
     private static final int MAX_EXECUTION_TIME_MENU = 1;
@@ -32,7 +32,7 @@ public class MenuPerformanceTest {
     @Test
     public void testGetMenuOptionsExecutionTime() {
         long startTime = System.nanoTime();
-        Menu menu = new Menu(userService,loginManager,gameManager,leaderboardManager,patchNotesManager,scanner);
+        Menu menu = new Menu(userService,loginManager,gameManager,leaderboardManager, patch,scanner);
         menu.getMenuOptions();
         long endTime = System.nanoTime();
 
@@ -54,7 +54,7 @@ public class MenuPerformanceTest {
 
         long startTime = System.nanoTime();
 
-        Menu menu = new Menu(userService,loginManager,gameManager,leaderboardManager,patchNotesManager,scanner);
+        Menu menu = new Menu(userService,loginManager,gameManager,leaderboardManager, patch,scanner);
         menu.displayMenu();
 
         long endTime = System.nanoTime();
