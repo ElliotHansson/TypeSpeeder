@@ -15,7 +15,7 @@ public class Challenge {
             "Träden är uppochned i chile"
     );
     private List<String> textsEnglish = List.of(
-            "i like turtles",
+            "I like turtles",
             "Dinosaurs are like people",
             "Movies make me sick"
     );
@@ -40,24 +40,22 @@ public class Challenge {
         LEVEL3
     }
 
-    public void startChallenge() {
-        GameLevel level = GameLevel.LEVEL1;
+    public void startChallenge(GameLevel level, String language) {
         switch (level) {
             case LEVEL1:
-                challenge1();
+                challenge1(language);
                 break;
             case LEVEL2:
-                challenge2();
+                challenge2(language);
                 break;
             case LEVEL3:
-                challenge3();
+                challenge3(language);
                 break;
         }
     }
 
-    private void challenge1() {
-        String language = chooseLanguage();
-        String textToType = getText(language);
+    private void challenge1(String language) {
+        String textToType = getText(language, GameLevel.LEVEL1);
         System.out.println("Du ska skriva följande: " + textToType);
 
         long startTime = System.currentTimeMillis();
@@ -85,9 +83,8 @@ public class Challenge {
         System.exit(0);
     }
 
-    private void challenge2() {
-        String language = chooseLanguage();
-        String originalText = getText(language);
+    private void challenge2(String language) {
+        String originalText = getText(language, GameLevel.LEVEL2);
         String mixedCaseText = mixCase(originalText);
         String originalCapitals = lettersToType(mixedCaseText);
 
@@ -112,8 +109,8 @@ public class Challenge {
         }
     }
 
-    private void challenge3() {
-        String text = "Hockey är nationalsporten i Kanada";
+    private void challenge3(String language) {
+        String text = getText(language, GameLevel.LEVEL3);
         String[] colors = {"\u001B[31m", "\u001B[32m", "\u001B[33m", "\u001B[34m", "\u001B[35m"};
         String greenColor = "\u001B[32m";
         String resetColor = "\u001B[0m";
@@ -141,21 +138,21 @@ public class Challenge {
         } else {
             System.out.println("Fel, rätt svar var: " + greenLetters);
         }
-        System.out.println("Du har tjänat " + score + " poäng.");
+        System.out.println("Du har tjänat " + score +  " poäng.");
         leaderboardManager.saveGameResult(currentUser, score, timeTaken, GameType.LEVEL3);
     }
 
-    private String chooseLanguage() {
-        System.out.println("Välj språk:");
-        System.out.println("1. Svenska");
-        System.out.println("2. Engelska");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        return choice == 1 ? "SV" : "EN";
-    }
-
-    private String getText(String language) {
-        return language.equals("SV") ? textsSwedish.get(random.nextInt(textsSwedish.size())) : textsEnglish.get(random.nextInt(textsEnglish.size()));
+    private String getText(String language, GameLevel level) {
+        switch (level) {
+            case LEVEL1:
+                return language.equals("SV") ? textsSwedish.get(random.nextInt(textsSwedish.size())) : textsEnglish.get(random.nextInt(textsEnglish.size()));
+            case LEVEL2:
+                return language.equals("SV") ? textsSwedish.get(random.nextInt(textsSwedish.size())) : textsEnglish.get(random.nextInt(textsEnglish.size()));
+            case LEVEL3:
+                return language.equals("SV") ? textsSwedish.get(random.nextInt(textsSwedish.size())) : textsEnglish.get(random.nextInt(textsEnglish.size()));
+            default:
+                throw new IllegalArgumentException("Invalid game level");
+        }
     }
 
     private String mixCase(String text) {
@@ -174,13 +171,13 @@ public class Challenge {
     }
 
     public void lettersToType() {
-        String text = "Hej På Dig";
+        String text = getText("SV", GameLevel.LEVEL1); // Get a sample text
         System.out.println("Bearbetar text för att hitta stora bokstäver: " + text);
         String capitals = lettersToType(text);
         System.out.println("Stora bokstäver i texten: " + capitals);
     }
 
-    private String lettersToType(String text) {
+    public String lettersToType(String text) {
         StringBuilder capitalLetters = new StringBuilder();
         for (char ch : text.toCharArray()) {
             if (Character.isUpperCase(ch)) {

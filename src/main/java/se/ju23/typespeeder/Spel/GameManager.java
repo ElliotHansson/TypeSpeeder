@@ -34,9 +34,19 @@ public class GameManager {
 
         try {
             Challenge.GameLevel level = Challenge.GameLevel.values()[gameTypeChoice - 1];
-            challenge.startChallenge();
+            String language = chooseLanguage();
+            challenge.startChallenge(level, language);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Ogiltigt val, försök igen.");
         }
+    }
+
+    private String chooseLanguage() {
+        System.out.println("Välj språk:");
+        System.out.println("1. Svenska");
+        System.out.println("2. Engelska");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        return choice == 1 ? "SV" : "EN";
     }
 }

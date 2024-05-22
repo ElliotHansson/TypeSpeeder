@@ -30,7 +30,7 @@ public class ChallengeTest {
     public void testStartChallengeMethodExists() {
         try {
             Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Spel.Challenge");
-            Method method = challengeClass.getMethod("startChallenge");
+            Method method = challengeClass.getMethod("startChallenge", Challenge.GameLevel.class, String.class);
             Assertions.assertNotNull(method, "The method 'startChallenge' should exist in the Challenge class.");
         } catch (NoSuchMethodException | ClassNotFoundException e) {
             Assertions.fail("The method 'startChallenge' could not be found in the Challenge class.");
