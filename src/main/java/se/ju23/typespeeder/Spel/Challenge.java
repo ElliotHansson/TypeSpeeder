@@ -20,12 +20,18 @@ public class Challenge {
             "Movies make me sick"
     );
     private Random random = new Random();
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
     private User currentUser;
     private LeaderboardManager leaderboardManager;
 
     public Challenge() {
+        this.scanner = new Scanner(System.in);
+    }
 
+    public Challenge(LeaderboardManager leaderboardManager, User user, Scanner scanner) {
+        this.leaderboardManager = leaderboardManager;
+        this.currentUser = user;
+        this.scanner = scanner;
     }
 
     public enum GameLevel {
@@ -34,12 +40,7 @@ public class Challenge {
         LEVEL3
     }
 
-    public Challenge(LeaderboardManager leaderboardManager, User user) {
-        this.leaderboardManager = leaderboardManager;
-        this.currentUser = user;
-    }
     public void startChallenge() {
-
         GameLevel level = GameLevel.LEVEL1;
         switch (level) {
             case LEVEL1:
@@ -61,7 +62,12 @@ public class Challenge {
 
         long startTime = System.currentTimeMillis();
         System.out.println("Skriv här: ");
-        String userInput = scanner.nextLine();
+
+        String userInput = "";
+        if (scanner.hasNextLine()) {
+            userInput = scanner.nextLine();
+        }
+
         long endTime = System.currentTimeMillis();
 
         boolean isCorrect = textToType.equalsIgnoreCase(userInput);
@@ -73,12 +79,10 @@ public class Challenge {
             leaderboardManager.saveGameResult(currentUser, score, timeTaken, GameType.LEVEL1);
             System.out.println("Du har tjänat " + score + " poäng.");
         } else {
-            System.out.println("Felaktigt svar. Försök igen.");
+            System.out.println("Felaktigt svar.");
         }
-        System.out.println("Vill du spela igen? (ja/nej)");
-        if ("nej".equals(scanner.nextLine().trim().toLowerCase())) {
-            return;
-        }
+        System.out.println("Spelet är över. Programmet stängs av.");
+        System.exit(0);
     }
 
     private void challenge2() {
@@ -91,7 +95,11 @@ public class Challenge {
         System.out.println(mixedCaseText);
 
         System.out.println("Skriv här:");
-        String userInput = scanner.nextLine();
+
+        String userInput = "";
+        if (scanner.hasNextLine()) {
+            userInput = scanner.nextLine();
+        }
 
         boolean isCorrect = playLevel(userInput, originalCapitals);
         if (isCorrect) {
@@ -116,7 +124,12 @@ public class Challenge {
 
         long startTime = System.currentTimeMillis();
         String greenLetters = extractColorLetters(colorizedText, greenColor, resetColor);
-        String userInput = scanner.nextLine();
+
+        String userInput = "";
+        if (scanner.hasNextLine()) {
+            userInput = scanner.nextLine();
+        }
+
         long endTime = System.currentTimeMillis();
 
         boolean isCorrect = userInput.equalsIgnoreCase(greenLetters);
@@ -159,7 +172,6 @@ public class Challenge {
         }
         return mixedCaseText.toString();
     }
-
 
     public void lettersToType() {
         String text = "Hej På Dig";

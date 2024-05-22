@@ -1,4 +1,5 @@
 package se.ju23.typespeeder.Spel;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ public class ChallengeTest {
     @Test
     public void testChallengeClassExists() {
         try {
-            Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Challenge");
+            Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Spel.Challenge");
         } catch (ClassNotFoundException e) {
             Assertions.fail("Challenge class could not be found.");
         }
@@ -18,7 +19,7 @@ public class ChallengeTest {
     @Test
     public void testLettersToTypeMethodExists() {
         try {
-            Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Challenge");
+            Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Spel.Challenge");
             Method method = challengeClass.getMethod("lettersToType");
             Assertions.assertNotNull(method, "The method 'lettersToType' should exist in the Challenge class.");
         } catch (NoSuchMethodException | ClassNotFoundException e) {
@@ -28,7 +29,7 @@ public class ChallengeTest {
     @Test
     public void testStartChallengeMethodExists() {
         try {
-            Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Challenge");
+            Class<?> challengeClass = Class.forName("se.ju23.typespeeder.Spel.Challenge");
             Method method = challengeClass.getMethod("startChallenge");
             Assertions.assertNotNull(method, "The method 'startChallenge' should exist in the Challenge class.");
         } catch (NoSuchMethodException | ClassNotFoundException e) {
