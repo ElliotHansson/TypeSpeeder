@@ -2,7 +2,7 @@ package se.ju23.typespeeder.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import se.ju23.typespeeder.Spel.PatchNotesManager;
+import se.ju23.typespeeder.Spel.Patch;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class AppConfig {
         return new Scanner(System.in);
     }
     @Bean
-    public PatchNotesManager patchNotesManager() {
-        return new PatchNotesManager();
+    public Patch patchNotesManager() {
+        return new Patch();
     }
 }
